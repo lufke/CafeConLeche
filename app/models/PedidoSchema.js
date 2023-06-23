@@ -5,7 +5,7 @@ export class PedidoSchema extends Realm.Object {
         name: 'Pedido',
         primaryKey: '_id',
         properties: {
-            _id: { type: 'objectId', default: new Realm.BSON.ObjectId() },
+            _id: { type: 'objectId', default: () => new Realm.BSON.ObjectId() },
             categoria: 'string',
             producto: 'Producto?',
             cantidad: 'int'

@@ -5,7 +5,7 @@ export class MesaSchema extends Realm.Object {
         name: 'Mesa',
         primaryKey: '_id',
         properties: {
-            _id: { type: 'objectId', default: new Realm.BSON.ObjectId() },
+            _id: { type: 'objectId', default: () => new Realm.BSON.ObjectId() },
             nombre: 'string',
             ubicacion: 'string',
             ocupada: { type: 'bool', default: false },

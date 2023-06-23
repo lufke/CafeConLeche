@@ -5,8 +5,8 @@ export class ComandaSchema extends Realm.Object {
         name: 'Comanda',
         primaryKey: '_id',
         properties: {
-            _id: { type: 'objectId', default: new Realm.BSON.ObjectId() },
-            fechaCreacion: { type: 'date', default: new Date() },
+            _id: { type: 'objectId', default: () => new Realm.BSON.ObjectId() },
+            fechaCreacion: { type: 'date', default: () => new Date() },
             pedidos: 'Pedido[]',
             total: { type: 'int', default: 0 },
             propina: { type: 'int', default: 0 },
