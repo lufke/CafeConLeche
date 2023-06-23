@@ -3,19 +3,25 @@ import { Formik } from 'formik'
 import { object, string, number } from 'yup'
 import { Input, Button, Text } from '@rneui/themed'
 import { Picker } from '@react-native-picker/picker'
-import { categorias } from '../utils/constants'
+import { categorias } from '../utils/categories'
+import { BSON } from 'realm'
 
-const { useRealm } = RealmContext
-// const categorias = ['Cafe', 'Bebida', 'Fria', 'Sandwich', 'Pasteleria', 'Extra']
+const { useRealm, useObject } = RealmContext
 
-//TODO PASAR A CATEGORIA CONSTANT
 const pickerCategorias = [...new Set(categorias.map(item => item.nombre))]
 
-// const categorias = 
-// console.log(pickerCategorias)
-
-export const ProductoForm = ({ navigation }) => {
-    console.log(navigation)
+export const ProductoForm = ({ route, navigation }) => {
+    const { idProducto, idCategoria } = route?.params
+    console.log(route.params)
+    let productoEditable = {}
+    // console.log(idProducto)
+    if (!idProducto) {
+        console.log('crear producto')
+    } else {
+        console.log('editar producto')
+        productoEditable = useObject('Producto', BSON.ObjectId(idProducto))
+        console.log(productoEditable)
+    }
     const realm = useRealm()
 
     const validationSchema = object().shape({
@@ -23,15 +29,20 @@ export const ProductoForm = ({ navigation }) => {
         categoria: string().oneOf(pickerCategorias).min(1),
         precio: number().integer().positive(),
         stock: number().integer(),
-        imagen: string().url()
-
+        // imagen: string().url()
     })
 
     const crearProducto = (nuevoProducto) => {
         try {
             console.log(nuevoProducto)
             realm.write(() => {
-                realm.create('Producto', nuevoProducto)
+                if (!idProducto) {
+                    realm.create('Producto', nuevoProducto)
+                } else {
+                    productoEditable.nombre = nuevoProducto.nombre
+                    productoEditable.categoria = nuevoProducto.categoria
+                    productoEditable.precio = nuevoProducto.precio
+                }
             })
             navigation.pop()
         } catch (error) {
@@ -43,16 +54,16 @@ export const ProductoForm = ({ navigation }) => {
         <>
             <Formik
                 initialValues={{
-                    nombre: '',
-                    categoria: 'Categoría',
-                    // precio: 0,
+                    nombre: productoEditable.nombre || '',
+                    categoria: productoEditable.categoria || pickerCategorias[idCategoria],
+                    precio: idProducto ? productoEditable.precio.toString() : '',
                     // stock: 0,
-                    imagen: ''
+                    // imagen: ''
 
                 }}
                 validationSchema={validationSchema}
                 onSubmit={values => {
-                    crearProducto({ ...values, precio: parseInt(values.precio || 0), stock: parseInt(values.stock || 0) })
+                    crearProducto({ ...values, precio: parseInt(values.precio || 0) })
                 }}
             >
                 {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
@@ -73,11 +84,6 @@ export const ProductoForm = ({ navigation }) => {
                             {['Categoría', ...pickerCategorias].map(item => (
                                 <Picker.Item label={item} value={item} key={item} />
                             ))}
-                            {/* <Picker.Item label='Cafe' value='Cafe' />
-                            <Picker.Item label='Bebida' value='Bebida' />
-                            <Picker.Item label='Sandwich' value='Sandwich' />
-                            <Picker.Item label='Pasteleria' value='Pastecleria' />
-                            <Picker.Item label='Extra' value='Extra' /> */}
                         </Picker>
                         {errors.categoria && <Text style={{ color: 'red' }}>{errors.categoria}</Text>}
                         <Input
@@ -88,31 +94,19 @@ export const ProductoForm = ({ navigation }) => {
                             inputMode='numeric'
                         />
                         {errors.precio && <Text style={{ color: 'red' }}>{errors.precio}</Text>}
-                        <Input
-                            label='Stock'
-                            value={values.stock}
-                            placeholder='Nombre Producto'
-                            onChangeText={handleChange('stock')}
-                            inputMode='numeric'
-
-                        />
-                        {errors.stock && <Text style={{ color: 'red' }}>{errors.stock}</Text>}
-                        <Input
-                            label='Imagen'
-                            value={values.imagen}
-                            placeholder='Imagen'
-                            onChangeText={handleChange('imagen')}
-                        />
-                        {errors.imagen && <Text style={{ color: 'red' }}>{errors.imagen}</Text>}
-
-                        <Button
-                            title={'Crear Producto'}
-                            onPress={handleSubmit}
-                        />
-                        <Button
+                        {!idProducto
+                            ? (<Button
+                                title={'Crear Producto'}
+                                onPress={handleSubmit}
+                            />)
+                            : (<Button
+                                title={'Editar Producto'}
+                                onPress={handleSubmit}
+                            />)}
+                        {/* <Button
                             title={'VOLVER'}
                             onPress={() => navigation.pop()}
-                        />
+                        /> */}
                     </>
                 )}
             </Formik >
