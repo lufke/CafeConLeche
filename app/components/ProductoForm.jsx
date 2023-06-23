@@ -4,7 +4,7 @@ import { object, string, number } from 'yup'
 import { Input, Button, Text } from '@rneui/themed'
 import { Picker } from '@react-native-picker/picker'
 import { categorias } from '../utils/categories'
-import { BSON } from 'realm'
+import { Realm } from '@realm/react'
 
 const { useRealm, useObject } = RealmContext
 
@@ -19,7 +19,7 @@ export const ProductoForm = ({ route, navigation }) => {
         console.log('crear producto')
     } else {
         console.log('editar producto')
-        productoEditable = useObject('Producto', BSON.ObjectId(idProducto))
+        productoEditable = useObject('Producto', Realm.BSON.ObjectId(idProducto))
         console.log(productoEditable)
     }
     const realm = useRealm()
