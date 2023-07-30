@@ -42,7 +42,7 @@ export const MesaForm = () => {
                     crearMesa({ ...values })
                 }}
             >
-                {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
+                {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
                     <>
                         <Input
                             label='Nombre'
@@ -50,8 +50,9 @@ export const MesaForm = () => {
                             placeholder='Nombre Mesa'
                             onChangeText={handleChange('nombre')}
                         />
-                        {errors.nombre && <Text style={{ color: 'red' }}>{errors.nombre}</Text>}
+                        {errors.nombre && touched.nombre ? <Text style={{ color: 'red' }}>{errors.nombre}</Text> : null}
                         <Picker
+                        style={{color:'saddlebrown'}}
                             onValueChange={handleChange('ubicacion')}
                             selectedValue={values.ubicacion}
                             prompt='Seleccione Sector'
