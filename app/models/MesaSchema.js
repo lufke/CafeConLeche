@@ -6,11 +6,10 @@ export class MesaSchema extends Realm.Object {
         primaryKey: '_id',
         properties: {
             _id: { type: 'objectId', default: () => new Realm.BSON.ObjectId() },
-            nombre: 'string',
+            nombre: { type: 'string' },
             ubicacion: 'string',
             ocupada: { type: 'bool', default: false },
             comanda: 'Comanda?',
-            pedido: 'string?'
         }
     }
 }
