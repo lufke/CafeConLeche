@@ -5,6 +5,7 @@ import { Input, Button, Text } from '@rneui/themed'
 import { Picker } from '@react-native-picker/picker'
 import { categorias } from '../utils/categories'
 import { Realm } from '@realm/react'
+import { View } from 'react-native'
 
 const { useRealm, useObject } = RealmContext
 
@@ -75,17 +76,21 @@ export const ProductoForm = ({ route, navigation }) => {
                             onChangeText={handleChange('nombre')}
                         />
                         {errors.nombre && <Text style={{ color: 'red' }}>{errors.nombre}</Text>}
-                        <Picker
-                            onValueChange={handleChange('categoria')}
-                            selectedValue={values.categoria}
-                            prompt='Seleccione Categoría'
+                        {/* <View style={{flexDirection:'row'  , justifyContent:'space-between'}}> */}
 
-                        >
-                            {['Categoría', ...pickerCategorias].map(item => (
-                                <Picker.Item label={item} value={item} key={item} />
-                            ))}
-                        </Picker>
-                        {errors.categoria && <Text style={{ color: 'red' }}>{errors.categoria}</Text>}
+                            {/* <Text>Categoria</Text> */}
+                            <Picker
+                                onValueChange={handleChange('categoria')}
+                                selectedValue={values.categoria}
+                                prompt='Seleccione Categoría'
+
+                            >
+                                {['Categoría', ...pickerCategorias].map(item => (
+                                    <Picker.Item label={item} value={item} key={item} />
+                                ))}
+                            </Picker>
+                            {errors.categoria && <Text style={{ color: 'red' }}>{errors.categoria}</Text>}
+                        {/* </View> */}
                         <Input
                             label='Precio'
                             value={values.precio}
