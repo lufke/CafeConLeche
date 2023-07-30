@@ -2,9 +2,11 @@ import { WelcomeScreen } from "./screens";
 import { AppProvider, UserProvider } from '@realm/react'
 import { appId, baseUrl } from '../realm.json'
 import RealmContext from './models'
-import { Navigation } from "./Navigation";
+import { Navigation, MyDrawer } from "./Navigation";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Text } from "react-native";
+import { ThemeProvider, createTheme } from '@rneui/themed'
+import { theme } from './utils/themes'
 
 const { RealmProvider } = RealmContext
 
@@ -48,9 +50,14 @@ const App = () => {
             }}
             fallback={() => <Text>CARGANDO DATOS...</Text>}
         >
-            <SafeAreaProvider>
-                <Navigation />
-            </SafeAreaProvider>
+            <ThemeProvider
+                theme={theme}
+            >
+                <SafeAreaProvider>
+                    <Navigation />
+                    {/* <MyDrawer /> */}
+                </SafeAreaProvider>
+            </ThemeProvider>
         </RealmProvider>
     )
 }
