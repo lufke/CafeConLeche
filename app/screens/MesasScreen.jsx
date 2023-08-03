@@ -129,6 +129,7 @@ export const MesasScreen = ({ navigation }) => {
                 icon={{ name: 'add', color: 'white' }}
                 placement='right'
                 onPress={() => navigation.navigate('NuevaMesa')}
+                onLongPress={() => navigation.toggleDrawer()}
             />
         </View>
     )

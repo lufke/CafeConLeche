@@ -4,7 +4,7 @@ import { FlatList, View } from 'react-native'
 import RealmContext from '../models'
 import { BSON } from 'realm'
 import { useUser } from '@realm/react'
-import { PedidoForm } from '../components'
+import { AddExtraForm, PedidoForm } from '../components'
 
 const { useRealm, useQuery, useObject } = RealmContext
 
@@ -17,6 +17,7 @@ export const PedidoScreen = ({ route, navigation }) => {
     const [bottonSheetVisible, setBottonSheetVisible] = useState(false)
     const [cantidadPedida, setCantidadPedida] = useState('')
     const [productoSeleccionado, setProductoSeleccionado] = useState({})
+    console.log(route.params)
 
     useEffect(() => {
         navigation.setOptions({ title: nombreCategoria.toUpperCase() })
@@ -76,11 +77,21 @@ export const PedidoScreen = ({ route, navigation }) => {
             isVisible={bottonSheetVisible}
             onBackdropPress={toggleBottomSheet}
         >
-            <PedidoForm
-                productoSeleccionado={productoSeleccionado}
-                comanda={comanda}
-                navigation={navigation}
-            />
+            {!route.params.isExtra
+                ? (<PedidoForm
+                    productoSeleccionado={productoSeleccionado}
+                    comanda={comanda}
+                    navigation={navigation}
+                />)
+                : (
+                    <AddExtraForm
+                        productoSeleccionado={productoSeleccionado}
+                        comanda={comanda}
+                        navigation={navigation}
+                        pedido={route.params?.idPedido}
+                    />
+                )
+            }
         </Dialog>
     </>
     )

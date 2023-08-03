@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer'
 // import {} from '@react-navigation/'
 import { PrinterScreen, MesasScreen, ProductoScreen, ComandaScreen, PedidoScreen, ComandasScreen } from "./screens"
-import { ProductoForm, MesaForm } from './components';
+import { ProductoForm, MesaForm, AddExtraForm } from './components';
 import { useTheme } from '@rneui/themed';
 
 const Stack = createNativeStackNavigator()
@@ -24,7 +24,8 @@ const TempStack = () => {
             <Stack.Screen name="Productos" component={ProductoScreen} />
             <Stack.Screen name="Comanda" component={ComandaScreen} />
             <Stack.Screen name="Pedido" component={PedidoScreen} />
-            <Stack.Screen name="Comandas" component={ComandasScreen} />
+            {/* <Stack.Screen name="Pedido" component={PedidoScreen} /> */}
+            <Stack.Screen name="AddExtra" component={AddExtraForm} />
         </Stack.Navigator>
     )
 }

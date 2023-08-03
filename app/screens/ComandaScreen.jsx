@@ -45,6 +45,7 @@ export const ComandaScreen = ({ route, navigation }) => {
 
     const agregarExtraPedido = item => {
         console.log('agregar extra')
+        navigation.navigate('Pedido', { idPedido: item._id.toString(), categoria: categorias[categorias.length - 1], comanda: idComanda, isExtra: true })
     }
 
     const eliminarPedido = item => {
@@ -63,12 +64,22 @@ export const ComandaScreen = ({ route, navigation }) => {
         return (
             <ListItem.Swipeable
                 leftContent={
-                    <Button
-                        title={'Editar'}
-                        buttonStyle={{ minHeight: '100%' }}
-                        icon={{ name: 'edit', color: 'white' }}
-                        onPress={() => editarPedido(item)}
-                    />
+                    <View
+                    //  style={{ flexDirection: "row", alignContent:'space-between' }}
+                     >
+                        {/* <Button
+                            // title={'Editar'}
+                            buttonStyle={{ minHeight: '100%' }}
+                            icon={{ name: 'edit', color: 'white' }}
+                            onPress={() => editarPedido(item)}
+                        /> */}
+                        <Button
+                            title={'Extra'}
+                            icon={{ name: 'add', color: 'white' }}
+                            buttonStyle={{ minHeight: '100%' }}
+                            onPress={() => agregarExtraPedido(item)}
+                        />
+                    </View>
                 }
                 rightContent={
                     <Button
@@ -82,7 +93,7 @@ export const ComandaScreen = ({ route, navigation }) => {
                 key={`${item._id}`}
                 onLongPress={
                     () => Alert.alert(
-                        'Eliminar', '¿Desea eliminar el pedido '+item.nombre+ '?',
+                        'Eliminar', '¿Desea eliminar el pedido ' + item.nombre + '?',
                         [
                             {
                                 text: 'Cancelar'
@@ -95,11 +106,30 @@ export const ComandaScreen = ({ route, navigation }) => {
                     )
                 }
                 onTouchCancel={() => console.log('blur item')}
+                onPress={() => console.log(item)}
             >
-                <Text h4>{item.cantidad}</Text>
+                {/* <Text h4>{item.cantidad}</Text> */}
                 <ListItem.Content>
-                    <ListItem.Title>{item.nombre}</ListItem.Title>
-                    <ListItem.Subtitle>$ {item.precioUnitario.toLocaleString('es-CL')} c/u</ListItem.Subtitle>
+                    <ListItem.Title>{item.cantidad} x {item.nombre}</ListItem.Title>
+                    <ListItem.Subtitle>
+                        <View>
+                            <Text>$ {item.precioUnitario.toLocaleString('es-CL')} c/u</Text>
+                            {item.extras.length ? (
+                                <View>
+                                    {item.extras.map(item => {
+                                        return (
+                                            <Text
+                                                key={`${item._id}`}
+                                            >
+                                                (+) {item.cantidad} {item.nombre} x $ {item.precioUnitario.toLocaleString('es-CL')} c/u
+                                            </Text>
+                                        )
+                                    })}
+                                </View>
+                            )
+                                : null}
+                        </View>
+                    </ListItem.Subtitle>
                 </ListItem.Content>
                 <Text h4>$ {item.total.toLocaleString('es-CL')}</Text>
             </ListItem.Swipeable>)
