@@ -54,8 +54,8 @@ const App = () => {
                 theme={theme}
             >
                 <SafeAreaProvider>
-                    <Navigation />
-                    {/* <MyDrawer /> */}
+                    {/* <Navigation /> */}
+                    <MyDrawer />
                 </SafeAreaProvider>
             </ThemeProvider>
         </RealmProvider>
