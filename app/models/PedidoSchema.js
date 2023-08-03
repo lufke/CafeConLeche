@@ -6,9 +6,14 @@ export class PedidoSchema extends Realm.Object {
         primaryKey: '_id',
         properties: {
             _id: { type: 'objectId', default: () => new Realm.BSON.ObjectId() },
-            categoria: 'string',
-            producto: 'Producto?',
-            cantidad: 'int'
+            nombre: 'string',
+            cantidad: 'int',
+            precioUnitario: 'int',
+            extras: 'Pedido[]',
+            total: 'int',
+            fechaCreacion: { type: 'date', default: () => new Date() },
+            creador: 'string',
+            comanda: 'string'
         }
     }
 }

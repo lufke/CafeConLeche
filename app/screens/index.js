@@ -1,11 +1,7 @@
-import { PrinterScreen } from './PrinterScreen'
-import { WelcomeScreen } from './WelcomeScreen'
-import { MesasScreen } from './MesasScreen'
-import { ProductoScreen } from './ProductoScreen'
-
-export {
-    PrinterScreen,
-    WelcomeScreen,
-    MesasScreen,
-    ProductoScreen
-}
+export { PrinterScreen } from './PrinterScreen'
+export { WelcomeScreen } from './WelcomeScreen'
+export { MesasScreen } from './MesasScreen'
+export { ProductoScreen } from './ProductoScreen'
+export { ComandaScreen } from './ComandaScreen'
+export { ComandasScreen } from './ComandasScreen'
+export { PedidoScreen } from './PedidoScreen'

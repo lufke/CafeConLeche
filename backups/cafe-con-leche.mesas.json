@@ -1,0 +1,132 @@
+[{
+  "_id": {
+    "$oid": "61fc4f2d896e1115f6ef1005"
+  },
+  "nombre": "DELIVERY 1",
+  "sector": "DELIVERY",
+  "ocupada": true,
+  "__v": 0,
+  "comanda": {
+    "$oid": "6231ccf350f9b8b2237e65c3"
+  }
+},
+{
+  "_id": {
+    "$oid": "61fc526c896e1115f6ef1037"
+  },
+  "nombre": "TERRAZA 1",
+  "sector": "TERRAZA",
+  "ocupada": true,
+  "__v": 0,
+  "comanda": {
+    "$oid": "6231c55050f9b8b2237e64e8"
+  }
+},
+{
+  "_id": {
+    "$oid": "61fc53c8896e1115f6ef1072"
+  },
+  "nombre": "CALLE 1",
+  "sector": "CALLE",
+  "ocupada": true,
+  "__v": 0,
+  "comanda": {
+    "$oid": "62b66c35dc4c87e5a31c86ef"
+  }
+},
+{
+  "_id": {
+    "$oid": "61fc53cf896e1115f6ef1076"
+  },
+  "nombre": "CALLE 2",
+  "sector": "CALLE",
+  "ocupada": true,
+  "__v": 0,
+  "comanda": {
+    "$oid": "630e0b32b96073d4843ddac5"
+  }
+},
+{
+  "_id": {
+    "$oid": "61fc8a4dea5d50e040d63a9f"
+  },
+  "nombre": "MESA 1",
+  "sector": "INTERIOR",
+  "ocupada": true,
+  "__v": 0,
+  "comanda": {
+    "$oid": "62b66bb7dc4c87e5a31c86e5"
+  }
+},
+{
+  "_id": {
+    "$oid": "61fc8a5cea5d50e040d63aa3"
+  },
+  "nombre": "MESA 3",
+  "sector": "INTERIOR",
+  "ocupada": true,
+  "__v": 0,
+  "comanda": {
+    "$oid": "630e0b37b96073d4843ddade"
+  }
+},
+{
+  "_id": {
+    "$oid": "61fc8a75ea5d50e040d63aa7"
+  },
+  "nombre": "MESA 4",
+  "sector": "INTERIOR",
+  "ocupada": true,
+  "__v": 0,
+  "comanda": {
+    "$oid": "630e0b3ab96073d4843ddaf7"
+  }
+},
+{
+  "_id": {
+    "$oid": "621cf84d3bfa145226fb085f"
+  },
+  "nombre": "TERRAZA 2",
+  "sector": "TERRAZA",
+  "ocupada": true,
+  "__v": 0,
+  "comanda": {
+    "$oid": "62a90d9d8523e0eb37c685d9"
+  }
+},
+{
+  "_id": {
+    "$oid": "621cf8543bfa145226fb0863"
+  },
+  "nombre": "TERRAZA 3",
+  "sector": "TERRAZA",
+  "ocupada": true,
+  "__v": 0,
+  "comanda": {
+    "$oid": "62c4422493fcee7de4b28380"
+  }
+},
+{
+  "_id": {
+    "$oid": "621cf8593bfa145226fb0867"
+  },
+  "nombre": "TERRAZA 4",
+  "sector": "TERRAZA",
+  "ocupada": true,
+  "__v": 0,
+  "comanda": {
+    "$oid": "6231c62e50f9b8b2237e651d"
+  }
+},
+{
+  "_id": {
+    "$oid": "6230ff76cb87dcb6cbfcc6ea"
+  },
+  "nombre": "MESA 5",
+  "sector": "INTERIOR",
+  "ocupada": true,
+  "__v": 0,
+  "comanda": {
+    "$oid": "6231c63350f9b8b2237e6528"
+  }
+}]

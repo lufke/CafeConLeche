@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Tab, TabView, Text, Icon, ListItem, FAB } from '@rneui/themed'
+import { Tab, TabView, Text, Icon, ListItem, FAB, Dialog } from '@rneui/themed'
 import { icons } from '../components/icons'
 import { FlatList, View, Dimensions } from 'react-native'
 import RealmContext from '../models'
@@ -9,26 +9,33 @@ import { categorias } from '../utils/categories'
 const { useQuery, useRealm } = RealmContext
 export const ProductoScreen = ({ navigation }) => {
 
+    console.log('rendering')
     const realm = useRealm()
-    const { width, height , } = Dimensions.get('window')
+    const { width, height, } = Dimensions.get('window')
     const [index, setIndex] = useState(0)
+    const [dialogVisible, setDialogVisible] = useState(false)
+    const [productoSeleccionado, setProductoSeleccionado] = useState({})
     const productos = useQuery('Producto')
     const categoriasNombre = [...new Set(categorias.map(item => item.nombre))]
     const listasPorCategoria = categoriasNombre.map(categoria => productos.filter(item => item.categoria === categoria))
-    
+
     const renderItem = ({ item }) => {
         return (
             <ListItem
                 style={{ flex: 1, width }}
                 key={`${item._id}`}
                 onPress={() => navigation.navigate('NuevoProducto', { idProducto: item._id.toString() })}
-                onLongPress={() => deleteItem(item)}
+                onLongPress={() => {
+                    setDialogVisible(true)
+                    setProductoSeleccionado(item)
+                }}
+                bottomDivider
             >
                 <ListItem.Content>
                     <ListItem.Title><Text>{item.nombre}</Text></ListItem.Title>
-                    <ListItem.Subtitle><Text>{item.precio}</Text></ListItem.Subtitle>
+                    <ListItem.Subtitle><Text>$ {item.precio.toLocaleString()}</Text></ListItem.Subtitle>
                 </ListItem.Content>
-                <ListItem.Chevron />
+                {/* <ListItem.Chevron /> */}
             </ListItem>
         )
     }
@@ -38,6 +45,8 @@ export const ProductoScreen = ({ navigation }) => {
             realm.write(() => {
                 realm.delete(item)
             })
+            setDialogVisible(false)
+            setProductoSeleccionado({})
         } catch (error) {
             console.error(error)
         }
@@ -95,11 +104,20 @@ export const ProductoScreen = ({ navigation }) => {
                     </TabView.Item>
                 ))}
             </TabView>
+            <Dialog
+                isVisible={dialogVisible}
+            // onBackdropPress={() => setDialogVisible(!dialogVisible)}
+            >
+                <Dialog.Title title={`Desea eliminar ${productoSeleccionado.nombre}?`} />
+                <Dialog.Actions>
+                    <Dialog.Button title='CANCELAR' onPress={() => setDialogVisible(!dialogVisible)} />
+                    <Dialog.Button title='ACEPTAR' onPress={() => deleteItem(productoSeleccionado)} />
+                </Dialog.Actions>
+            </Dialog>
             <FAB
                 // onPress={()=>console.log('click')}
                 onPress={() => navigation.navigate('NuevoProducto', { idProducto: null, idCategoria: index })}
-                icon={{ name: 'add', color: 'green' }}
-                color='red'
+                icon={{ name: 'add', color: 'white' }}
                 placement='right'
             />
         </>

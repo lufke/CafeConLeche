@@ -1,0 +1,581 @@
+[{
+  "_id": {
+    "$oid": "620c833d7b9e615fd6b6e074"
+  },
+  "nombre": "MARRAQUETA CON HUEVO 2",
+  "precio": 1600,
+  "stock": 0,
+  "categoria": "Sandwich",
+  "__v": 0,
+  "imagen": "https://res.cloudinary.com/cafe-con-leche/image/upload/v1645104385/w7fccm1bknmbxk1z9lnd.jpg"
+},
+{
+  "_id": {
+    "$oid": "620e43ade76ea38dc371a804"
+  },
+  "nombre": "CREMA",
+  "precio": 0,
+  "stock": 0,
+  "categoria": "Extra",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621afd8ba9d8168602f37531"
+  },
+  "nombre": "CORTADO SIMPLE",
+  "precio": 1500,
+  "stock": 0,
+  "categoria": "Cafe",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621afda4a9d8168602f37534"
+  },
+  "nombre": "CORTADO DOBLE",
+  "precio": 1800,
+  "stock": 0,
+  "categoria": "Cafe",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621afdbfa9d8168602f37537"
+  },
+  "nombre": "CAPUCCINO SIMPLE",
+  "precio": 1900,
+  "stock": 0,
+  "categoria": "Cafe",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621afe32a9d8168602f37541"
+  },
+  "nombre": "CAPUCCINO DOBLE",
+  "precio": 2300,
+  "stock": 0,
+  "categoria": "Cafe",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621afe5ea9d8168602f37544"
+  },
+  "nombre": "MOCKACCINO SIMPLE",
+  "precio": 2000,
+  "stock": 0,
+  "categoria": "Cafe",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621afe7ea9d8168602f37547"
+  },
+  "nombre": "MOCKACINO DOBLE",
+  "precio": 2400,
+  "stock": 0,
+  "categoria": "Cafe",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621afe90a9d8168602f3754a"
+  },
+  "nombre": "AMERICANO SIMPLE",
+  "precio": 1500,
+  "stock": 0,
+  "categoria": "Cafe",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621afe9da9d8168602f3754d"
+  },
+  "nombre": "AMERICANO DOBLE",
+  "precio": 1800,
+  "stock": 0,
+  "categoria": "Cafe",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621afec0a9d8168602f37552"
+  },
+  "nombre": "ESPRESSO SIMPLE",
+  "precio": 1500,
+  "stock": 0,
+  "categoria": "Cafe",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621afedfa9d8168602f37555"
+  },
+  "nombre": "ESPRESSO DOBLE",
+  "precio": 1800,
+  "stock": 0,
+  "categoria": "Cafe",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621affd7a9d8168602f3755a"
+  },
+  "nombre": "BEBIDA",
+  "precio": 850,
+  "stock": 0,
+  "categoria": "Bebida Fria",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621affe5a9d8168602f3755d"
+  },
+  "nombre": "JUGOS",
+  "precio": 2100,
+  "stock": 0,
+  "categoria": "Bebida Fria",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621affffa9d8168602f37560"
+  },
+  "nombre": "CAFE HELADO",
+  "precio": 2400,
+  "stock": 0,
+  "categoria": "Bebida Fria",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621b0038a9d8168602f37565"
+  },
+  "nombre": "JAMON QUESO",
+  "precio": 2200,
+  "stock": 0,
+  "categoria": "Sandwich",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621b0041a9d8168602f37568"
+  },
+  "nombre": "SALAME QUESO",
+  "precio": 2500,
+  "stock": 0,
+  "categoria": "Sandwich",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621b0055a9d8168602f3756b"
+  },
+  "nombre": "CHAMPIÑON QUESO",
+  "precio": 2500,
+  "stock": 0,
+  "categoria": "Sandwich",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621b0067a9d8168602f3756e"
+  },
+  "nombre": "AVE PALTA MOLDE",
+  "precio": 2500,
+  "stock": 0,
+  "categoria": "Sandwich",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621b007fa9d8168602f37571"
+  },
+  "nombre": "AVE PALTA MARRAQUETA",
+  "precio": 2800,
+  "stock": 0,
+  "categoria": "Sandwich",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621b008fa9d8168602f37574"
+  },
+  "nombre": "AVE PIMENTÓN MOLDE",
+  "precio": 2300,
+  "stock": 0,
+  "categoria": "Sandwich",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621b00c5a9d8168602f37578"
+  },
+  "nombre": "AVE PIMENTÓN  MARRAQUETA ",
+  "precio": 2600,
+  "stock": 0,
+  "categoria": "Sandwich",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621b0102a9d8168602f3757c"
+  },
+  "nombre": "DESAYUNO  TE",
+  "precio": 2700,
+  "stock": 0,
+  "categoria": "Sandwich",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621b010ea9d8168602f3757f"
+  },
+  "nombre": "DESAYUNO CORTADO",
+  "precio": 3100,
+  "stock": 0,
+  "categoria": "Sandwich",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621b0127a9d8168602f37582"
+  },
+  "nombre": "MECHADA ITALIANA  MOLDE",
+  "precio": 3800,
+  "stock": 0,
+  "categoria": "Sandwich",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621b0136a9d8168602f37585"
+  },
+  "nombre": "MECHADA ITALIANA MARRAQUETA ",
+  "precio": 4100,
+  "stock": 0,
+  "categoria": "Sandwich",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621b0146a9d8168602f37588"
+  },
+  "nombre": "PAILA CON MARRAQUETA ",
+  "precio": 1600,
+  "stock": 0,
+  "categoria": "Sandwich",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621b0163a9d8168602f3758b"
+  },
+  "nombre": "MECHADA QUESO MOLDE",
+  "precio": null,
+  "stock": 0,
+  "categoria": "Sandwich",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621b0176a9d8168602f3758e"
+  },
+  "nombre": "MECHADA  QUESO  MARRAQUETA ",
+  "precio": null,
+  "stock": 0,
+  "categoria": "Sandwich",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621b0183a9d8168602f37591"
+  },
+  "nombre": "MARRAQUETA  JAMÓN PALTA",
+  "precio": 2200,
+  "stock": 0,
+  "categoria": "Sandwich",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621b01a3a9d8168602f37594"
+  },
+  "nombre": "MILK SHAKE",
+  "precio": 2400,
+  "stock": 0,
+  "categoria": "Bebida Fria",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621b01c1a9d8168602f37599"
+  },
+  "nombre": "PIE DE LIMON",
+  "precio": 2100,
+  "stock": 0,
+  "categoria": "Pasteleria",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621b01cea9d8168602f3759c"
+  },
+  "nombre": "TORTA MANJAR TRUFA",
+  "precio": 2200,
+  "stock": 0,
+  "categoria": "Pasteleria",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621b0209a9d8168602f3759f"
+  },
+  "nombre": "TARTA FRUTOS ROJOS SIN GLUTEN",
+  "precio": 2500,
+  "stock": 0,
+  "categoria": "Pasteleria",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621b0319a9d8168602f375a2"
+  },
+  "nombre": "SIN LACTOSA",
+  "precio": 300,
+  "stock": 0,
+  "categoria": "Extra",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621cf61f3bfa145226fb0813"
+  },
+  "nombre": "TÉ O NESCAFE",
+  "precio": 1000,
+  "stock": 0,
+  "categoria": "Cafe",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621cf6bf3bfa145226fb0828"
+  },
+  "nombre": "AVE QUESO  MOLDE",
+  "precio": 2300,
+  "stock": 0,
+  "categoria": "Sandwich",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621cf6dc3bfa145226fb082d"
+  },
+  "nombre": "AVE QUESO  MARRAQUETA ",
+  "precio": 2600,
+  "stock": 0,
+  "categoria": "Sandwich",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621cf76b3bfa145226fb083e"
+  },
+  "nombre": "AVE ITALIANO MOLDE",
+  "precio": 2700,
+  "stock": 0,
+  "categoria": "Sandwich",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621cf77a3bfa145226fb0841"
+  },
+  "nombre": "AVE ITALIANO MARRAQUETA ",
+  "precio": 3000,
+  "stock": 0,
+  "categoria": "Sandwich",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621cf7bd3bfa145226fb084c"
+  },
+  "nombre": "WAFFLES",
+  "precio": 1400,
+  "stock": 0,
+  "categoria": "Pasteleria",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621cf7d43bfa145226fb0851"
+  },
+  "nombre": "TORTA ZANAHORIA",
+  "precio": 2000,
+  "stock": 0,
+  "categoria": "Pasteleria",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621cf7e33bfa145226fb0854"
+  },
+  "nombre": "SODA",
+  "precio": 350,
+  "stock": 0,
+  "categoria": "Bebida Fria",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621cf7ff3bfa145226fb0857"
+  },
+  "nombre": "TE CON LECHE TAZA",
+  "precio": 1100,
+  "stock": 0,
+  "categoria": "Cafe",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "621cf80d3bfa145226fb085a"
+  },
+  "nombre": "TE CON LECHE TAZON",
+  "precio": 1400,
+  "stock": 0,
+  "categoria": "Cafe",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "62312ecbe5474af597dfeebe"
+  },
+  "nombre": "CALZONES ROTOS",
+  "precio": 500,
+  "stock": 0,
+  "categoria": "Pasteleria",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "62312ee9e5474af597dfeec1"
+  },
+  "nombre": "QUEQUE DE ZANAHORIA",
+  "precio": 500,
+  "stock": 0,
+  "categoria": "Pasteleria",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "62312efbe5474af597dfeec4"
+  },
+  "nombre": "ROLLITOS DE CANELA ",
+  "precio": 500,
+  "stock": 0,
+  "categoria": "Pasteleria",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "62312f12e5474af597dfeec7"
+  },
+  "nombre": "AGUA MINERAL CON Y SIN GAS",
+  "precio": 900,
+  "stock": 0,
+  "categoria": "Bebida Fria",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "62312f98e5474af597dfeed2"
+  },
+  "nombre": "JAMÓN PALTA MOLDE",
+  "precio": 2000,
+  "stock": 0,
+  "categoria": "Sandwich",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "62313096e5474af597dfef4f"
+  },
+  "nombre": "DESCAFEINADO",
+  "precio": 300,
+  "stock": 0,
+  "categoria": "Extra",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "623130a2e5474af597dfef52"
+  },
+  "nombre": " VAINILLA",
+  "precio": 0,
+  "stock": 0,
+  "categoria": "Extra",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "623130aae5474af597dfef55"
+  },
+  "nombre": "AMARETTO",
+  "precio": 0,
+  "stock": 0,
+  "categoria": "Extra",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "623130c0e5474af597dfef58"
+  },
+  "nombre": " CHOCOLATE",
+  "precio": 0,
+  "stock": 0,
+  "categoria": "Extra",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "623130f4e5474af597dfef61"
+  },
+  "nombre": "MENTA",
+  "precio": 0,
+  "stock": 0,
+  "categoria": "Extra",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "623130fbe5474af597dfef64"
+  },
+  "nombre": "CARAMELO",
+  "precio": 0,
+  "stock": 0,
+  "categoria": "Extra",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6231c6d450f9b8b2237e6543"
+  },
+  "nombre": "PAILA CON TOSTADAS",
+  "precio": 1300,
+  "stock": 0,
+  "categoria": "Sandwich",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6231cc8550f9b8b2237e6582"
+  },
+  "nombre": "PAILA SOLA ",
+  "precio": 1000,
+  "stock": 0,
+  "categoria": "Sandwich",
+  "__v": 0
+}]

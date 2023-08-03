@@ -12,10 +12,10 @@ const { useRealm, useObject } = RealmContext
 const pickerCategorias = [...new Set(categorias.map(item => item.nombre))]
 
 export const ProductoForm = ({ route, navigation }) => {
-    const { idProducto, idCategoria } = route?.params
-    console.log(route.params)
-    let productoEditable = {}
+    const { idProducto, idCategoria } = route?.params || ''
+    // console.log(route.params)
     // console.log(idProducto)
+    let productoEditable = {}
     if (!idProducto) {
         console.log('crear producto')
     } else {
@@ -74,22 +74,23 @@ export const ProductoForm = ({ route, navigation }) => {
                             value={values.nombre}
                             placeholder='Nombre Producto'
                             onChangeText={handleChange('nombre')}
+                            errorMessage={errors.nombre ? <Text style={{ color: 'red' }}>{errors.nombre}</Text> : null}
                         />
                         {errors.nombre && <Text style={{ color: 'red' }}>{errors.nombre}</Text>}
                         {/* <View style={{flexDirection:'row'  , justifyContent:'space-between'}}> */}
 
-                            {/* <Text>Categoria</Text> */}
-                            <Picker
-                                onValueChange={handleChange('categoria')}
-                                selectedValue={values.categoria}
-                                prompt='Seleccione Categoría'
+                        {/* <Text>Categoria</Text> */}
+                        <Picker
+                            onValueChange={handleChange('categoria')}
+                            selectedValue={values.categoria}
+                            prompt='Seleccione Categoría'
 
-                            >
-                                {['Categoría', ...pickerCategorias].map(item => (
-                                    <Picker.Item label={item} value={item} key={item} />
-                                ))}
-                            </Picker>
-                            {errors.categoria && <Text style={{ color: 'red' }}>{errors.categoria}</Text>}
+                        >
+                            {['Categoría', ...pickerCategorias].map(item => (
+                                <Picker.Item label={item} value={item} key={item} />
+                            ))}
+                        </Picker>
+                        {errors.categoria && <Text style={{ color: 'red' }}>{errors.categoria}</Text>}
                         {/* </View> */}
                         <Input
                             label='Precio'

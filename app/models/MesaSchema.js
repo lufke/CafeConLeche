@@ -10,6 +10,7 @@ export class MesaSchema extends Realm.Object {
             ubicacion: 'string',
             ocupada: { type: 'bool', default: false },
             comanda: 'Comanda?',
+            v__: { type: 'int', default: 0 }
         }
     }
 }
