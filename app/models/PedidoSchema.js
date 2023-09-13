@@ -13,7 +13,8 @@ export class PedidoSchema extends Realm.Object {
             total: 'int',
             fechaCreacion: { type: 'date', default: () => new Date() },
             creador: 'string',
-            comanda: 'string'
+            comanda: 'string',
+            entregado: { type: 'bool', default: false }
         }
     }
 }

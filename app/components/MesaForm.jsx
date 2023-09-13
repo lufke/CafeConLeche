@@ -1,16 +1,27 @@
 import RealmContext from '../models'
-import { Formik } from 'formik'
+import { Formik, useFormik } from 'formik'
 import { object, string } from 'yup'
 import { Input, Button, Text } from '@rneui/themed'
 import { Picker } from '@react-native-picker/picker'
 import { sectoresMesa } from '../utils/sectoresMesas'
 
 
-const { useRealm } = RealmContext
+const { useRealm, useObject } = RealmContext
 const sector = sectoresMesa.map(mesa => mesa.nombre)
 
-export const MesaForm = ({ navigation, params }) => {
+export const MesaForm = ({ navigation, route }) => {
+    // const formik = useFormik()
+    const { idMesa } = route?.params || ''
+    let mesaEditable = {}
+    if (!idMesa) {
+        console.log('crear mesa')
+    } else {
+        console.log('editar mesa')
+        mesaEditable = useObject('Mesa', Realm.BSON.ObjectId(idMesa))
+    }
+
     const realm = useRealm()
+
 
     const validationSchema = object().shape({
         nombre: string().required('Nombre requerido'),
@@ -19,28 +30,36 @@ export const MesaForm = ({ navigation, params }) => {
 
     const crearMesa = (nuevaMesa) => {
         try {
-            realm.write(() => realm.create('Mesa', nuevaMesa))
-            navigation.goBack()
+            realm.write(() => {
+                if (!idMesa) {
+                    realm.create('Mesa', nuevaMesa)
+                } else {
+                    mesaEditable.nombre = nuevaMesa.nombre.toUpperCase().trim()
+                    mesaEditable.ubicacion = nuevaMesa.ubicacion
+                }
+            })
+            navigation.pop()
         } catch (error) {
             console.error(error)
         }
     }
 
-    const handleOcultaBarra = (params) => {
-        console.log(params)
-        navigation.toggleDrawer()
-        // navigation.navigate('PrinterBT')
+    handleOnSubmit = (valor) => {
+        const valorTransformado = valor.nombre.toUpperCase().trim()
+        // formik.setFieldValue('nombre', valorTransformado)
+        console.log(valorTransformado)
     }
 
     return (
         <>
             <Formik
                 initialValues={{
-                    nombre: '',
-                    ubicacion: sector[0],
+                    nombre: mesaEditable.nombre || '',
+                    ubicacion: mesaEditable.ubicacion || sector[0],
 
                 }}
                 validationSchema={validationSchema}
+                // onSubmit={values => handleOnSubmit(values)}
                 onSubmit={values => {
                     crearMesa({ ...values })
                 }}
@@ -54,9 +73,9 @@ export const MesaForm = ({ navigation, params }) => {
                             onChangeText={handleChange('nombre')}
                             errorMessage={errors.nombre && touched.nombre ? <Text style={{ color: 'red' }}>{errors.nombre}</Text> : null}
                         />
-                        
+
                         <Picker
-                        
+
                             style={{ color: 'saddlebrown' }}
                             onValueChange={handleChange('ubicacion')}
                             selectedValue={values.ubicacion}

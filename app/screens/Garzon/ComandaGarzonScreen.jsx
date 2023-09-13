@@ -1,16 +1,16 @@
 import { Text, SpeedDial, Dialog, ListItem, Icon, Card, Button } from "@rneui/themed"
 import { useState, useEffect } from "react"
-import RealmContext from '../models'
+import RealmContext from '../../models'
 import { BSON } from "realm"
-import { categorias } from '../utils/categories'
+import { categorias } from '../../utils/categories'
 import { Alert, FlatList, View } from "react-native"
+import { printComanda, imprimirPedidos } from "../../utils/printer"
 
 const { useRealm, useQuery, useObject } = RealmContext
 
 // console.log(categorias)
 export const ComandaScreen = ({ route, navigation }) => {
     categoriasSinExtra = categorias.filter((item) => item.nombre != 'Extra')
-    console.log(route?.params?.idComanda)
     const realm = useRealm()
     const [open, setOpen] = useState(false)
     const [dialogCategoriaVisible, setDialogCategoriaVisible] = useState(false)
@@ -18,7 +18,8 @@ export const ComandaScreen = ({ route, navigation }) => {
     const idComanda = route.params.idComanda
     const comanda = useObject('Comanda', BSON.ObjectId(idComanda))
     const pedidos = useQuery('Pedido').filtered(`comanda == '${idComanda}'`)
-    console.log(pedidos)
+
+    // console.log(pedidos)
     // const [totalComanda, setTotalComanda] = useState(comanda.total)
 
     const mesa = useObject('Mesa', BSON.ObjectId(comanda.mesa))
@@ -60,19 +61,39 @@ export const ComandaScreen = ({ route, navigation }) => {
         })
     }
 
+    const confirmaEntregaPedido = item => {
+        console.log(item)
+        realm.write(() => {
+            item.entregado = !item.entregado
+        })
+
+    }
+
+    const pagarComanda = item => {
+        realm.write(() => {
+            item.pagado = true
+            item.activa = false
+            mesa.comanda = null
+        })
+        navigation.pop()
+    }
+
+    const borraComanda = item => {
+        // console.log(`editando ${item}`)
+        item.comanda && realm.write(() => {
+            console.log(`editando ${item} con null`)
+            console.log(item)
+            // delete item.comanda
+            item.comanda = null
+            // item.comanda = undefined
+        })
+    }
+
     const renderComandaItem = ({ item }) => {
         return (
             <ListItem.Swipeable
                 leftContent={
-                    <View
-                    //  style={{ flexDirection: "row", alignContent:'space-between' }}
-                     >
-                        {/* <Button
-                            // title={'Editar'}
-                            buttonStyle={{ minHeight: '100%' }}
-                            icon={{ name: 'edit', color: 'white' }}
-                            onPress={() => editarPedido(item)}
-                        /> */}
+                    <View                    >
                         <Button
                             title={'Extra'}
                             icon={{ name: 'add', color: 'white' }}
@@ -83,10 +104,11 @@ export const ComandaScreen = ({ route, navigation }) => {
                 }
                 rightContent={
                     <Button
-                        title={'Extra'}
-                        icon={{ name: 'add', color: 'white' }}
+                        title={'Eliminar'}
+                        icon={{ name: 'delete', color: 'white' }}
                         buttonStyle={{ minHeight: '100%' }}
-                        onPress={() => agregarExtraPedido(item)}
+                        color={'error'}
+                        onPress={() => eliminarPedido(item)}
                     />
                 }
                 bottomDivider
@@ -106,9 +128,13 @@ export const ComandaScreen = ({ route, navigation }) => {
                     )
                 }
                 onTouchCancel={() => console.log('blur item')}
-                onPress={() => console.log(item)}
+            // onPress={() => console.log(item)}
             >
                 {/* <Text h4>{item.cantidad}</Text> */}
+                <ListItem.CheckBox
+                    checked={item.entregado}
+                    onIconPress={() => confirmaEntregaPedido(item)}
+                />
                 <ListItem.Content>
                     <ListItem.Title>{item.cantidad} x {item.nombre}</ListItem.Title>
                     <ListItem.Subtitle>
@@ -138,6 +164,7 @@ export const ComandaScreen = ({ route, navigation }) => {
 
     return (
         <>
+            <Text h3 h3Style={{ color: 'saddlebrown', textAlign: 'center' }}>{comanda.mesaName}</Text>
             <FlatList
                 data={comanda?.pedidos}
                 renderItem={renderComandaItem}
@@ -153,23 +180,34 @@ export const ComandaScreen = ({ route, navigation }) => {
 
             >
                 <SpeedDial.Action
+                    icon={{ name: 'attach-money', color: '#fff' }}
+                    title="Cerrar Cuenta"
+                    onPress={() => pagarComanda(comanda)}
+                />
+                <SpeedDial.Action
+                    icon={{ name: 'receipt-long', color: '#fff' }}
+                    title="Imprimir Cuenta"
+
+                    onPress={
+                        comanda.pedidos.length > 0
+                            ? () => {
+                                // imprimirPedidos(comanda)
+                                setOpen(!open)
+                                printComanda(comanda)
+                            }
+                            : () => {
+                                setOpen(!open)
+                                Alert.alert('Comanda sin pedidos')
+                            }
+                    }
+                />
+                <SpeedDial.Action
                     icon={{ name: 'add', color: '#fff' }}
                     title="Agregar Pedido"
                     onPress={() => {
                         setDialogCategoriaVisible(!dialogCategoriaVisible)
                         setOpen(!open)
                     }}
-                />
-
-                <SpeedDial.Action
-                    icon={{ name: 'receipt-long', color: '#fff' }}
-                    title="Imprimir Cuenta"
-                    onPress={() => console.log('Pagar Cuenta')}
-                />
-                <SpeedDial.Action
-                    icon={{ name: 'attach-money', color: '#fff' }}
-                    title="Pagar Cuenta"
-                    onPress={() => console.log('Pagar Cuenta')}
                 />
             </SpeedDial>
             {/*dialogo para las categorias*/}

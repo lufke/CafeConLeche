@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Text, FAB, ListItem, Button as RNButton, Dialog, Icon } from '@rneui/themed'
 import { FlatList, View, Button, Alert } from 'react-native'
-import { MesaForm } from '../components/MesaForm'
-import RealmContext from '../models'
+import { MesaForm } from '../../components/MesaForm'
+import RealmContext from '../../models'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useUser } from '@realm/react'
 

@@ -66,7 +66,7 @@ export const LoginScreen = () => {
                     {({ handleChange, handleSubmit, values, errors, touched }) => (
                         <>
                             <Card>
-                                <Card.Title><Text h4>Bienvenid@ a SEV</Text></Card.Title>
+                                <Card.Title><Text h4>Café con Leche App</Text></Card.Title>
                                 <Card.Divider />
                                 <Input
                                     placeholder='Ingrese Correo Electronico'

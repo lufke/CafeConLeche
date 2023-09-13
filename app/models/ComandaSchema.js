@@ -12,7 +12,10 @@ export class ComandaSchema extends Realm.Object {
             propina: { type: 'int', default: 0 },
             creador: 'string?',
             pagado: { type: 'bool', default: false },
-            mesa: 'string'
+            mesa: 'string',
+            mesaName: 'string',
+            activa: { type: 'bool', default: true }
+
         }
     }
 }

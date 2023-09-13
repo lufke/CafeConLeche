@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { Text, ListItem, PricingCard, Input, Button, Dialog } from '@rneui/themed'
 import { FlatList, View } from 'react-native'
-import RealmContext from '../models'
+import RealmContext from '../../models'
 import { BSON } from 'realm'
 import { useUser } from '@realm/react'
-import { AddExtraForm, PedidoForm } from '../components'
+import { AddExtraForm, PedidoForm } from '../../components'
 
 const { useRealm, useQuery, useObject } = RealmContext
 
@@ -13,7 +13,7 @@ export const PedidoScreen = ({ route, navigation }) => {
     const user = useUser()
     const comanda = useObject('Comanda', BSON.ObjectId(route.params.comanda))
     const nombreCategoria = route.params.categoria.nombre
-    const productos = useQuery('Producto').filtered(`categoria == '${nombreCategoria}'`)
+    const productos = useQuery('Producto').filtered(`categoria == '${nombreCategoria}'`).sorted([['nombre', false]])
     const [bottonSheetVisible, setBottonSheetVisible] = useState(false)
     const [cantidadPedida, setCantidadPedida] = useState('')
     const [productoSeleccionado, setProductoSeleccionado] = useState({})

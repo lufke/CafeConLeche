@@ -1,21 +1,18 @@
 import React, { useState } from 'react'
 import { Tab, TabView, Text, Icon, ListItem, FAB, Dialog } from '@rneui/themed'
 import { icons } from '../components/icons'
-import { FlatList, View, Dimensions } from 'react-native'
-import RealmContext from '../models'
-import { categorias } from '../utils/categories'
-
+import { FlatList, View, Dimensions, Alert } from 'react-native'
+import RealmContext from '../../models'
+import { categorias } from '../../utils/categories'
 
 const { useQuery, useRealm } = RealmContext
+
 export const ProductoScreen = ({ navigation }) => {
 
-    console.log('rendering')
     const realm = useRealm()
     const { width, height, } = Dimensions.get('window')
     const [index, setIndex] = useState(0)
-    const [dialogVisible, setDialogVisible] = useState(false)
-    const [productoSeleccionado, setProductoSeleccionado] = useState({})
-    const productos = useQuery('Producto')
+    const productos = useQuery('Producto').sorted([['categoria', false], ['nombre', false]])
     const categoriasNombre = [...new Set(categorias.map(item => item.nombre))]
     const listasPorCategoria = categoriasNombre.map(categoria => productos.filter(item => item.categoria === categoria))
 
@@ -26,8 +23,22 @@ export const ProductoScreen = ({ navigation }) => {
                 key={`${item._id}`}
                 onPress={() => navigation.navigate('NuevoProducto', { idProducto: item._id.toString() })}
                 onLongPress={() => {
-                    setDialogVisible(true)
-                    setProductoSeleccionado(item)
+                    Alert.alert(
+                        'Atención',
+                        `¿Eliminar ${item.nombre}?`,
+                        [
+                            {
+                                text: 'Cancelar',
+                                style: 'cancel'
+                            },
+                            {
+                                text: 'Aceptar',
+                                onPress: () => deleteItem(item)
+                            },
+                        ],
+                        {
+                            cancelable: true
+                        })
                 }}
                 bottomDivider
             >
@@ -45,22 +56,9 @@ export const ProductoScreen = ({ navigation }) => {
             realm.write(() => {
                 realm.delete(item)
             })
-            setDialogVisible(false)
-            setProductoSeleccionado({})
         } catch (error) {
             console.error(error)
         }
-    }
-
-    const renderItem2 = ({ item, index }) => {
-        return (
-            <View style={{ flex: 1, padding: 10, backgroundColor: index % 2 == 1 ? 'red' : 'green', width }}>
-                <Text h3>{item.nombre}</Text>
-                <Text h4>$ {item.precio}</Text>
-                <Text h4>{(index % 2).toString()}</Text>
-
-            </View>
-        )
     }
 
     return (
@@ -83,39 +81,23 @@ export const ProductoScreen = ({ navigation }) => {
             <TabView
                 value={index}
                 onChange={setIndex}
-                animationType='spring'
+                // animationType='spring'
             >
                 {listasPorCategoria.map((lista, idx) => (
                     <TabView.Item
                         key={idx.toString()}
                         style={{ flex: 1 }}
                     >
-                        {/* <View
-                            style={{ flex: 1 }}
-                        > */}
-                        {/* <Text>id: {idx.toString()}</Text> */}
                         <FlatList
                             data={lista}
                             keyExtractor={(_, idx) => idx.toString()}
                             renderItem={renderItem}
                             ListEmptyComponent={<View style={{ justifyContent: 'center', alignContent: 'center' }}><Text h4>Categoría "{categoriasNombre[idx]}" sin productos</Text></View>}
                         />
-                        {/* </View> */}
                     </TabView.Item>
                 ))}
             </TabView>
-            <Dialog
-                isVisible={dialogVisible}
-            // onBackdropPress={() => setDialogVisible(!dialogVisible)}
-            >
-                <Dialog.Title title={`Desea eliminar ${productoSeleccionado.nombre}?`} />
-                <Dialog.Actions>
-                    <Dialog.Button title='CANCELAR' onPress={() => setDialogVisible(!dialogVisible)} />
-                    <Dialog.Button title='ACEPTAR' onPress={() => deleteItem(productoSeleccionado)} />
-                </Dialog.Actions>
-            </Dialog>
             <FAB
-                // onPress={()=>console.log('click')}
                 onPress={() => navigation.navigate('NuevoProducto', { idProducto: null, idCategoria: index })}
                 icon={{ name: 'add', color: 'white' }}
                 placement='right'

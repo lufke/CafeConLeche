@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Button, FlatList, PermissionsAndroid, View, Text, Pressable, Alert, TextInput, Image } from "react-native";
+import { FlatList, PermissionsAndroid, View, Pressable, Alert } from "react-native";
 import { BluetoothManager, BluetoothEscposPrinter } from '@pipechela/react-native-bluetooth-escpos-printer';
-import { base64Image, base64Jpg, base64JpgLogo } from '../components/base64logos'
-import { Input, Icon } from "@rneui/themed";
-import { ProductoForm } from "../components/ProductoForm";
-import { icons } from "../components/icons";
+import { Input, Icon, Button, Text } from "@rneui/themed";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const PrinterScreen = () => {
 
@@ -19,16 +17,27 @@ export const PrinterScreen = () => {
     const [textToPrint, setTextToPrint] = useState('')
 
     useEffect(() => {
+        getPermissions()
     }, [])
+
+    const getPermissions = async () => {
+        try {
+            await PermissionsAndroid.request('android.permission.BLUETOOTH_CONNECT')
+            await PermissionsAndroid.request('android.permission.BLUETOOTH_SCAN')
+            await PermissionsAndroid.request('android.permission.ACCESS_FINE_LOCATION')
+
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+
     const escanea = async () => {
         try {
             setLoading(true)
             setEquipos([])
             console.log('escaneando...')
             console.log(new Date())
-            await PermissionsAndroid.request('android.permission.BLUETOOTH_CONNECT')
-            await PermissionsAndroid.request('android.permission.BLUETOOTH_SCAN')
-            await PermissionsAndroid.request('android.permission.ACCESS_FINE_LOCATION')
             const btDevices = await BluetoothManager.scanDevices()
             console.log(new Date())
             const equiposBT = JSON.parse(btDevices)
@@ -47,6 +56,7 @@ export const PrinterScreen = () => {
         try {
             console.log(`conectando a ${equipo} ...`)
             await BluetoothManager.connect(equipo)
+            await AsyncStorage.setItem('connected_printer', equipo)
             setEquipoConectado(equipo)
             setConectado(true)
             console.log(`conectado :)`)
@@ -54,20 +64,16 @@ export const PrinterScreen = () => {
         } catch (error) {
             console.error(error)
             Alert.alert(JSON.stringify(error))
+            Alert.alert('Error', error.message)
         }
     }
 
     const habilitaBluetooth = async () => {
         try {
-            const datos = await BluetoothManager.enableBluetooth()
             const emparejados = []
-            console.log('kyriiita!!!')
+            const datos = await BluetoothManager.enableBluetooth()
             datos.forEach(item => emparejados.push(JSON.parse(item)))
             setEquipos(emparejados)
-            console.log(emparejados)
-            // console.log(datos[0])
-            // console.log(typeof(datos))
-            // Alert.alert(`${datos}`)
         } catch (error) {
             console.error(error)
             Alert.alert(JSON.stringify(error))
@@ -520,20 +526,10 @@ export const PrinterScreen = () => {
 
     return (
         <View>
-            <ProductoForm />
-            {/* <TextInput
-                onChangeText={setEncoding}
-                value={encoding}
-                // style={{flex:0}}
-            />
-            <TextInput
-                onChangeText={setCodepage}
-                value={codepage.toString()}
-            /> */}
             <Input
                 onChangeText={setTextToPrint}
                 value={textToPrint}
-                placeholder="INGRESE TEXTO PA IMPRIMIR"
+                placeholder="INGRESE TEXTO PARA IMPRIMIR"
                 leftIcon={{ name: "print" }}
             />
             {/* <Button
@@ -572,36 +568,12 @@ export const PrinterScreen = () => {
                 title="IMPRIME"
                 onPress={printCuadroDeTexto}
             />
-            {/* <View >
-                <Button
-                    title="Print FOLLOWING Image" onPress={async () => {
-                        try {
-                            await BluetoothEscposPrinter.printPic(base64Jpg, { width: 200, left: 40 });
-                            await BluetoothEscposPrinter.printText("\r\n\r\n\r\n", {});
-                            await BluetoothEscposPrinter.printPic(base64Image, { width: 200, left: 40 });
-                            await BluetoothEscposPrinter.printText("\r\n\r\n\r\n", {});
-                            await BluetoothEscposPrinter.printPic(base64JpgLogo, { width: 220, left: 20 });
-                        } catch (e) {
-                            Alert.alert(e.message || "ERROR")
-                        }
-                    }} />
-                <View>
-                    <Image style={{ width: 150, height: 58 }} source={{ uri: "data:image/jpeg;base64," + base64Jpg }} />
-                    <Image style={{ width: 60, height: 60 }} source={{ uri: "data:image/png;base64," + base64Image }} />
-                    <Image style={{ width: 150, height: 70 }} source={{ uri: "data:image/jpeg;base64," + base64JpgLogo }} />
-                </View>
-            </View> */}
-
-            {/* <Button
-        title="auto test"
-        onPress={autoTest}
-      /> */}
             {loading
-                ? <Text>loading</Text>
+                ? <Text>CARGANDO ...</Text>
                 : <FlatList
                     data={equipos}
                     ListEmptyComponent={<Text>no hay impresoras</Text>}
-                    keyExtractor={(item, index) => index}
+                    keyExtractor={(_, index) => index}
                     renderItem={({ item }) => <View style={{ padding: 20 }}><Pressable onPress={() => conectar(item.address)}><Text>NOMBRE: {item.name} - MAC: {item.address}</Text></Pressable></View>}
                 />}
         </View>

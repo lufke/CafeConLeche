@@ -1,6 +1,7 @@
 import { createTheme } from "@rneui/themed";
 
 export const theme = createTheme({
+    mode: 'ligth',
     components: {
         SpeedDial: {
             color: 'saddlebrown'
@@ -10,8 +11,8 @@ export const theme = createTheme({
         },
         FAB: {
             color: 'saddlebrown',
-            size: 50,
-            placement: 'left'
+            size: 'large',
+            placement: 'right'
         },
         DialogTitle: {
             title: 'red'
@@ -27,8 +28,6 @@ export const theme = createTheme({
     darkColors: {
         primary: 'blue',
     },
-    background: {
-        color: 'red'
-    },
+
     // mode: 'dark',
 });
