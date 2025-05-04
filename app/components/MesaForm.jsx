@@ -1,5 +1,5 @@
 import RealmContext from '../models'
-import { Formik, useFormik } from 'formik'
+import { Formik } from 'formik'
 import { object, string } from 'yup'
 import { Input, Button, Text } from '@rneui/themed'
 import { Picker } from '@react-native-picker/picker'
@@ -10,7 +10,6 @@ const { useRealm, useObject } = RealmContext
 const sector = sectoresMesa.map(mesa => mesa.nombre)
 
 export const MesaForm = ({ navigation, route }) => {
-    // const formik = useFormik()
     const { idMesa } = route?.params || ''
     let mesaEditable = {}
     if (!idMesa) {
@@ -44,12 +43,6 @@ export const MesaForm = ({ navigation, route }) => {
         }
     }
 
-    handleOnSubmit = (valor) => {
-        const valorTransformado = valor.nombre.toUpperCase().trim()
-        // formik.setFieldValue('nombre', valorTransformado)
-        console.log(valorTransformado)
-    }
-
     return (
         <>
             <Formik
@@ -59,7 +52,6 @@ export const MesaForm = ({ navigation, route }) => {
 
                 }}
                 validationSchema={validationSchema}
-                // onSubmit={values => handleOnSubmit(values)}
                 onSubmit={values => {
                     crearMesa({ ...values })
                 }}

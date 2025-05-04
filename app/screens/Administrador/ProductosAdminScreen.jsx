@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { Tab, TabView, Text, Icon, ListItem, FAB, Dialog } from '@rneui/themed'
-import { icons } from '../components/icons'
+import { Tab, TabView, Text, ListItem, FAB } from '@rneui/themed'
 import { FlatList, View, Dimensions, Alert } from 'react-native'
 import RealmContext from '../../models'
 import { categorias } from '../../utils/categories'
@@ -43,7 +42,7 @@ export const ProductoScreen = ({ navigation }) => {
                 bottomDivider
             >
                 <ListItem.Content>
-                    <ListItem.Title><Text>{item.nombre}</Text></ListItem.Title>
+                    <ListItem.Title><Text>{item.nombre.toUpperCase()}</Text></ListItem.Title>
                     <ListItem.Subtitle><Text>$ {item.precio.toLocaleString()}</Text></ListItem.Subtitle>
                 </ListItem.Content>
                 {/* <ListItem.Chevron /> */}

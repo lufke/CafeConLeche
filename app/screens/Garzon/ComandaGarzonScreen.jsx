@@ -1,29 +1,25 @@
-import { Text, SpeedDial, Dialog, ListItem, Icon, Card, Button } from "@rneui/themed"
+import { Text, SpeedDial, Dialog, ListItem, Icon, Card, Button, Input } from "@rneui/themed"
 import { useState, useEffect } from "react"
 import RealmContext from '../../models'
 import { BSON } from "realm"
 import { categorias } from '../../utils/categories'
 import { Alert, FlatList, View } from "react-native"
-import { printComanda, imprimirPedidos } from "../../utils/printer"
+import { printComanda, } from "../../utils/printer"
 
 const { useRealm, useQuery, useObject } = RealmContext
 
-// console.log(categorias)
 export const ComandaScreen = ({ route, navigation }) => {
     categoriasSinExtra = categorias.filter((item) => item.nombre != 'Extra')
     const realm = useRealm()
     const [open, setOpen] = useState(false)
+    const [propinaSugerida, setPropinaSugerida] = useState(0)
+    const [dialogPropinaVisible, setDialogPropinaVisible] = useState(false)
     const [dialogCategoriaVisible, setDialogCategoriaVisible] = useState(false)
-    // const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('')
+    
     const idComanda = route.params.idComanda
     const comanda = useObject('Comanda', BSON.ObjectId(idComanda))
     const pedidos = useQuery('Pedido').filtered(`comanda == '${idComanda}'`)
-
-    // console.log(pedidos)
-    // const [totalComanda, setTotalComanda] = useState(comanda.total)
-
     const mesa = useObject('Mesa', BSON.ObjectId(comanda.mesa))
-    // const productos = useQuery('Producto')
 
     useEffect(() => {
         navigation.setOptions({ title: `COMANDA: ${mesa.nombre.toUpperCase()}` })
@@ -53,7 +49,6 @@ export const ComandaScreen = ({ route, navigation }) => {
         console.log(item)
         console.log(comanda)
         if (item.extras.length > 0) {
-            // console.log(item.extras)
         }
         realm.write(() => {
             comanda.total = comanda.total - item.total
@@ -62,11 +57,25 @@ export const ComandaScreen = ({ route, navigation }) => {
     }
 
     const confirmaEntregaPedido = item => {
-        console.log(item)
         realm.write(() => {
             item.entregado = !item.entregado
         })
 
+    }
+
+    const agregarPropinaEImprimir = item => {
+        realm.write(() => {
+            item.propina = parseInt(propinaSugerida)
+        })
+        setDialogPropinaVisible(!dialogPropinaVisible)
+        printComanda(comanda)
+    }
+
+    const agregarPropina = item => {
+        realm.write(() => {
+            item.propina = parseInt(propinaSugerida)
+        })
+        setDialogPropinaVisible(!dialogPropinaVisible)
     }
 
     const pagarComanda = item => {
@@ -76,17 +85,6 @@ export const ComandaScreen = ({ route, navigation }) => {
             mesa.comanda = null
         })
         navigation.pop()
-    }
-
-    const borraComanda = item => {
-        // console.log(`editando ${item}`)
-        item.comanda && realm.write(() => {
-            console.log(`editando ${item} con null`)
-            console.log(item)
-            // delete item.comanda
-            item.comanda = null
-            // item.comanda = undefined
-        })
     }
 
     const renderComandaItem = ({ item }) => {
@@ -115,7 +113,7 @@ export const ComandaScreen = ({ route, navigation }) => {
                 key={`${item._id}`}
                 onLongPress={
                     () => Alert.alert(
-                        'Eliminar', '¿Desea eliminar el pedido ' + item.nombre + '?',
+                        'Eliminar', '¿Desea eliminar el pedido ' + item.nombre.toUpperCase() + '?',
                         [
                             {
                                 text: 'Cancelar'
@@ -127,16 +125,13 @@ export const ComandaScreen = ({ route, navigation }) => {
                         ]
                     )
                 }
-                onTouchCancel={() => console.log('blur item')}
-            // onPress={() => console.log(item)}
             >
-                {/* <Text h4>{item.cantidad}</Text> */}
                 <ListItem.CheckBox
                     checked={item.entregado}
                     onIconPress={() => confirmaEntregaPedido(item)}
                 />
                 <ListItem.Content>
-                    <ListItem.Title>{item.cantidad} x {item.nombre}</ListItem.Title>
+                    <ListItem.Title>{item.cantidad} x {item.nombre.toUpperCase()}</ListItem.Title>
                     <ListItem.Subtitle>
                         <View>
                             <Text>$ {item.precioUnitario.toLocaleString('es-CL')} c/u</Text>
@@ -147,7 +142,7 @@ export const ComandaScreen = ({ route, navigation }) => {
                                             <Text
                                                 key={`${item._id}`}
                                             >
-                                                (+) {item.cantidad} {item.nombre} x $ {item.precioUnitario.toLocaleString('es-CL')} c/u
+                                                (+) {item.cantidad} {item.nombre.toUpperCase()} x $ {item.precioUnitario.toLocaleString('es-CL')} c/u
                                             </Text>
                                         )
                                     })}
@@ -168,7 +163,7 @@ export const ComandaScreen = ({ route, navigation }) => {
             <FlatList
                 data={comanda?.pedidos}
                 renderItem={renderComandaItem}
-                ListEmptyComponent={<Text h2 style={{ textAlign: 'center' }}>SIN PEDIDOS</Text>}
+                ListEmptyComponent={<Text h3 style={{ textAlign: 'center' }}>SIN PEDIDOS</Text>}
                 ListHeaderComponent={<View style={{ flex: 1, alignItems: 'center' }}><Text h4>Total: ${comanda.total.toLocaleString('es-CL')}</Text></View>}
             />
             <SpeedDial
@@ -182,18 +177,36 @@ export const ComandaScreen = ({ route, navigation }) => {
                 <SpeedDial.Action
                     icon={{ name: 'attach-money', color: '#fff' }}
                     title="Cerrar Cuenta"
-                    onPress={() => pagarComanda(comanda)}
+                    onPress={() => Alert.alert(
+                        'Atencion',
+                        '¿Desea cerrar la cuenta?',
+                        [
+                            {
+                                text: 'CANCELAR'
+                            },
+                            {
+                                text: 'ACEPTAR',
+                                onPress: () => pagarComanda(comanda)
+                            },
+                        ],
+                        {
+                            cancelable: true
+                        }
+                    )}
+                    onLongPress={()=>{
+                        setOpen(!open)
+                        setDialogPropinaVisible(true)
+                    }}
                 />
                 <SpeedDial.Action
                     icon={{ name: 'receipt-long', color: '#fff' }}
                     title="Imprimir Cuenta"
-
                     onPress={
                         comanda.pedidos.length > 0
                             ? () => {
-                                // imprimirPedidos(comanda)
                                 setOpen(!open)
-                                printComanda(comanda)
+                                // printComanda(comanda)
+                                setDialogPropinaVisible(true)
                             }
                             : () => {
                                 setOpen(!open)
@@ -235,10 +248,33 @@ export const ComandaScreen = ({ route, navigation }) => {
                     </ListItem>
                 ))}
             </Dialog>
-            {/* Dialogo para elegir cantidad de un pedido */}
-            {/* <Dialog>
+            <Dialog
+                isVisible={dialogPropinaVisible}
+            >
+                <Dialog.Title
+                    title="Ingrese propina"
+                    onBackdropPress={() => setDialogPropinaVisible(!dialogPropinaVisible)}
 
-            </Dialog> */}
+                />
+                <Dialog.Actions>
+                    <Input
+                        placeholder={`Sugerida $ ${(comanda.total * 0.1).toLocaleString('es-CL')}`}
+                        inputMode="numeric"
+                        onChangeText={text => setPropinaSugerida(text)}
+                    />
+                    <Dialog.Button
+                        title={'ACEPTAR'}
+                        onPress={() => {
+                            agregarPropinaEImprimir(comanda)
+
+                        }}
+                    />
+                    <Dialog.Button
+                        title={'CANCELAR'}
+                        onPress={() => setDialogPropinaVisible(false)}
+                    />
+                </Dialog.Actions>
+            </Dialog>
         </>
     )
 }

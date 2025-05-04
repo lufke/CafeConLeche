@@ -93,7 +93,7 @@ export const printComanda = async (comanda) => {
         await BluetoothEscposPrinter.printText(`Cafe Con Leche\r\n`, { heigthtimes: 1, widthtimes: 1 })
         await BluetoothEscposPrinter.printText(`Pudeto #375 - Quillota\r\n`, {})
         await BluetoothEscposPrinter.printText(`${new Date().toLocaleString('es-CL')}\r\n`, {})
-        await BluetoothEscposPrinter.printText(`MESA: ${comanda.mesaName}\r\n`, {})
+        await BluetoothEscposPrinter.printText(`MESA: ${reemplazarCaracteresEspeciales(comanda.mesaName.toUpperCase().trim())}\r\n`, {})
         await BluetoothEscposPrinter.printText(`${comanda._id}\r\n`, {})
         await BluetoothEscposPrinter.printText(`\r\n`, {})
 
@@ -118,7 +118,7 @@ export const printComanda = async (comanda) => {
 
         for (let i = 0; i < comanda.pedidos.length; i++) {
             // console.log(comanda.pedidos[i])
-            await BluetoothEscposPrinter.printText(reemplazarCaracteresEspeciales(comanda.pedidos[i].nombre) + '\r\n', {})
+            await BluetoothEscposPrinter.printText(reemplazarCaracteresEspeciales(comanda.pedidos[i].nombre.toUpperCase().trim()) + '\r\n', {})
             await BluetoothEscposPrinter.printColumn(
                 [2, 7, 32 - (2 + 7 + 9), 9],
 
@@ -138,7 +138,7 @@ export const printComanda = async (comanda) => {
             )
             if (comanda.pedidos[i].extras.length > 0) {
                 for (let k = 0; k < comanda.pedidos[i].extras.length; k++) {
-                    await BluetoothEscposPrinter.printText('(+) ' + reemplazarCaracteresEspeciales(comanda.pedidos[i].extras[k].nombre) + '\r\n', {})
+                    await BluetoothEscposPrinter.printText('(+) ' + reemplazarCaracteresEspeciales(comanda.pedidos[i].extras[k].nombre.toUpperCase().trim()) + '\r\n', {})
                     await BluetoothEscposPrinter.printColumn(
                         [2, 7, 32 - (2 + 7 + 9), 9],
                         [
@@ -161,9 +161,40 @@ export const printComanda = async (comanda) => {
         }
 
         // await imprimirPedidos(comanda)
+        await BluetoothEscposPrinter.printerAlign(BluetoothEscposPrinter.ALIGN.RIGHT)
+        await BluetoothEscposPrinter.printText("--------------------------------\r\n", {});
+        await BluetoothEscposPrinter.printColumn(
+            [32 - (9), 9],
+            [
+                BluetoothEscposPrinter.ALIGN.RIGHT,
+                BluetoothEscposPrinter.ALIGN.RIGHT
+            ],
+            [
+                'SUBTOTAL',
+                `$ ${comanda.total.toLocaleString('es-CL')}`,
+            ],
+            {}
+
+        )
+        await BluetoothEscposPrinter.printColumn(
+            [32 - (9), 9],
+            [
+                BluetoothEscposPrinter.ALIGN.RIGHT,
+                BluetoothEscposPrinter.ALIGN.RIGHT
+            ],
+            [
+                'PROPINA',
+                `$ ${comanda.propina.toLocaleString('es-CL')}`,
+            ],
+            {}
+
+        )
+        // await BluetoothEscposPrinter.printText(`Subtotal $${comanda.total.toLocaleString('es-CL')}\r\n`, {})
+        // await BluetoothEscposPrinter.printText(`Propina $${comanda.propina.toLocaleString('es-CL')}\r\n`, {})
+
         await BluetoothEscposPrinter.printerAlign(BluetoothEscposPrinter.ALIGN.CENTER)
         await BluetoothEscposPrinter.printText("--------------------------------\r\n", {});
-        await BluetoothEscposPrinter.printText(`Total $${comanda.total.toLocaleString('es-CL')}\r\n`, { heigthtimes: 1, widthtimes: 1 })
+        await BluetoothEscposPrinter.printText(`Total $${(comanda.total + comanda.propina).toLocaleString('es-CL')}\r\n`, { heigthtimes: 1, widthtimes: 1 })
         await BluetoothEscposPrinter.printQRCode(`https://www.instagram.com/cafe.con.leche_q`, 150, BluetoothEscposPrinter.ERROR_CORRECTION.H)
         await BluetoothEscposPrinter.printText(`\r\n`, {})
         await BluetoothEscposPrinter.printText(`Facebook: /CafeConLecheQuillota\r\n`, {})

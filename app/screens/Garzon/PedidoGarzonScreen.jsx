@@ -1,16 +1,13 @@
 import { useEffect, useState } from 'react'
-import { Text, ListItem, PricingCard, Input, Button, Dialog } from '@rneui/themed'
+import { Text, ListItem, Dialog } from '@rneui/themed'
 import { FlatList, View } from 'react-native'
 import RealmContext from '../../models'
 import { BSON } from 'realm'
-import { useUser } from '@realm/react'
 import { AddExtraForm, PedidoForm } from '../../components'
 
-const { useRealm, useQuery, useObject } = RealmContext
+const { useQuery, useObject } = RealmContext
 
 export const PedidoScreen = ({ route, navigation }) => {
-    const realm = useRealm()
-    const user = useUser()
     const comanda = useObject('Comanda', BSON.ObjectId(route.params.comanda))
     const nombreCategoria = route.params.categoria.nombre
     const productos = useQuery('Producto').filtered(`categoria == '${nombreCategoria}'`).sorted([['nombre', false]])
@@ -32,22 +29,15 @@ export const PedidoScreen = ({ route, navigation }) => {
         return (
             <View
                 style={{
-                    // alignContent: 'center',
-                    // justifyContent: 'space-around'
                 }}
             >
                 <ListItem
                     key={`${item._id}`}
-                    // bottomDivider
-
                     topDivider
                     onPress={() => handleSeleccionaProducto(item)}
-
                 >
                     <ListItem.Content>
-                        <ListItem.Title>{item.nombre}</ListItem.Title>
-                        {/* <ListItem.Subtitle>$ {item.precio.toLocaleString('es-CL')}</ListItem.Subtitle> */}
-                        {/* <Text>Texto Random</Text> */}
+                        <ListItem.Title>{item.nombre.toUpperCase()}</ListItem.Title>
                     </ListItem.Content>
                     <Text h4>$ {item.precio.toLocaleString('es-CL')}</Text>
                 </ListItem>

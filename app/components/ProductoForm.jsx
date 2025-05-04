@@ -5,7 +5,6 @@ import { Input, Button, Text } from '@rneui/themed'
 import { Picker } from '@react-native-picker/picker'
 import { categorias } from '../utils/categories'
 import { Realm } from '@realm/react'
-import { View } from 'react-native'
 
 const { useRealm, useObject } = RealmContext
 
@@ -28,7 +27,7 @@ export const ProductoForm = ({ route, navigation }) => {
     const validationSchema = object().shape({
         nombre: string().required('Nombre requerido'),
         categoria: string().oneOf(pickerCategorias).min(1),
-        precio: number().integer().positive(),
+        precio: number().integer().positive('Precio debe ser mayor que 0'),
         stock: number().integer(),
         // imagen: string().url()
     })

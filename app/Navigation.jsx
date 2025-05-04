@@ -143,7 +143,7 @@ const MyDrawer = () => {
             theme={theme}
         >
             <Drawer.Navigator
-                initialRouteName='Garzon'
+                initialRouteName='Garzón'
                 screenOptions={{
                     headerShown: true,
                     drawerStyle: {
@@ -151,9 +151,9 @@ const MyDrawer = () => {
                     },
                 }}
             >
-                <Drawer.Screen name='Garzon' component={GarzonStack} />
+                <Drawer.Screen name='Garzón' component={GarzonStack} />
                 <Drawer.Screen name='Cocina' component={CocinaStack} />
-                <Drawer.Screen name='Admin' component={AdminTab} />
+                <Drawer.Screen name='Configuración' component={AdminTab} />
                 <Drawer.Screen name='Ventas' component={VentasScreen} />
                 <Drawer.Screen name='Usuario' component={UserStack} />
             </Drawer.Navigator>
@@ -162,7 +162,6 @@ const MyDrawer = () => {
 }
 
 const Navigator = () => {
-    const { theme } = useTheme()
     return (
         <MyDrawer />
     )

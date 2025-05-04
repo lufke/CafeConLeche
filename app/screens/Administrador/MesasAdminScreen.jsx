@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { Text, FAB, ListItem, Icon, Dialog } from '@rneui/themed'
+import { Text, FAB, ListItem, Icon, } from '@rneui/themed'
 import { FlatList, View, Alert, Dimensions, StyleSheet } from 'react-native'
 import RealmContext from '../../models'
 
